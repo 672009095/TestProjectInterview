@@ -1,5 +1,8 @@
 package com.testprojectinterview.app.testprojectinterview;
 
+import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -19,7 +22,10 @@ import android.view.ViewGroup;
 
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
 import com.testprojectinterview.app.testprojectinterview.Fragment.ApplicationFragment;
 import com.testprojectinterview.app.testprojectinterview.Fragment.ChatFragment;
 
@@ -45,16 +51,17 @@ public class TabActivityMenu extends AppCompatActivity {
     private TabLayout tabLayout;
     private ChatFragment chatFragment;
     private ApplicationFragment applicationFragment;
+    private static final int SIGN_IN_REQUEST_CODE = 1;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_tab_menu);
-
+        mAuth = FirebaseAuth.getInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.app_name);
-        getSupportActionBar().hide();
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setOffscreenPageLimit(2);
         setupViewPager(mViewPager);
@@ -63,7 +70,9 @@ public class TabActivityMenu extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
     }
 
+    private void displayChatMessages() {
 
+    }
     private void setupViewPager (ViewPager viewPager){
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ChatFragment(), "Chat");
@@ -88,6 +97,10 @@ public class TabActivityMenu extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.menu_sign_out){
+            mAuth.signOut();
+            Intent a = new Intent(TabActivityMenu.this,LoginCustomActivity.class);
+            startActivity(a);
         }
 
         return super.onOptionsItemSelected(item);
@@ -171,4 +184,5 @@ public class TabActivityMenu extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
 }

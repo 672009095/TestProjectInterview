@@ -26,8 +26,10 @@
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".TabActivityMenu"
-            android:label="@string/title_activity_tab_menu"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_tab_menu" />
+        <activity android:name=".LoginClass.EmailLoginActivity" />
+        <activity android:name=".LoginClass.GmailLoginActivity" />
+        <activity android:name=".LoginClass.TwitterLoginActivity"></activity>
     </application>
 
 </manifest>
