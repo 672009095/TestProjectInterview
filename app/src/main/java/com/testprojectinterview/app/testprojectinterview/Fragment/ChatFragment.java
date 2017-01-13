@@ -51,7 +51,11 @@ public class ChatFragment  extends Fragment implements View.OnClickListener{
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Log.i("AuthStateChanged", "User is signed in with uid: " + user.getUid()+" || "+user.getEmail());
-                    username = user.getEmail();
+                    if(user.getEmail().isEmpty()||user.getEmail()==null){
+                        username = "Anonymous";
+                    }else {
+                        username = user.getEmail();
+                    }
                 } else {
                     Log.i("AuthStateChanged", "No user is signed in.");
                 }

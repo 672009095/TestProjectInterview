@@ -50,5 +50,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         android:layout_above="@id/buttonLoginGmail"/>
 </RelativeLayout>

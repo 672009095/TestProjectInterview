@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.testprojectinterview.app.testprojectinterview.R;
 import com.testprojectinterview.app.testprojectinterview.TabActivityMenu;
@@ -103,30 +104,27 @@ public class EmailLoginActivity extends AppCompatActivity implements View.OnClic
         }
 
         // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        Intent a = new Intent(EmailLoginActivity.this, TabActivityMenu.class);
-                        startActivity(a);
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(EmailLoginActivity.this, "Your email not registered, please create one",
-                                    Toast.LENGTH_SHORT).show();
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "signInWithEmail:failed", task.getException());
+                                if(task.getException() instanceof FirebaseAuthInvalidUserException) {
+                                    Toast.makeText(EmailLoginActivity.this, "invalid email address",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }else{
+                                Intent a = new Intent(EmailLoginActivity.this, TabActivityMenu.class);
+                                startActivity(a);
+                            }
                         }
+                    });
 
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            Log.d(TAG,"failed auth");
-                            //mStatusTextView.setText(R.string.auth_failed);
-                        }
-                        // [END_EXCLUDE]
-                    }
-                });
         // [END sign_in_with_email]
     }
 
