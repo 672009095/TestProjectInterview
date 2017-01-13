@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -31,7 +32,7 @@
         <activity android:name=".LoginClass.GmailLoginActivity" />
         <activity android:name=".LoginClass.TwitterLoginActivity"></activity>
         <service
-            android:name=".MyFirebaseMessagingService">
+            android:name=".Firebase.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
@@ -42,6 +43,12 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="ADD_YOUR_API_KEY_HERE" />
     </application>
 
 </manifest>

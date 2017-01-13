@@ -185,4 +185,11 @@ public class TabActivityMenu extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mAuth.signOut();
+        Intent a = new Intent(TabActivityMenu.this,LoginCustomActivity.class);
+        startActivity(a);
+    }
 }
