@@ -52,8 +52,8 @@ public class TabActivityMenu extends AppCompatActivity {
     private ChatFragment chatFragment;
     private ApplicationFragment applicationFragment;
     private static final int SIGN_IN_REQUEST_CODE = 1;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    public FirebaseAuth mAuth;
+    public FirebaseAuth.AuthStateListener mAuthStateListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
